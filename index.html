@@ -518,11 +518,11 @@
 </head>
 <body>
 
-  <!-- 音樂播放器 (浮動) - BOL4 給你宇宙 (Galaxy) -->
+  <!-- 音樂播放器 (浮動) - 替換為輕快浪漫 K-Pop 婚禮音樂風格 -->
   <div class="music-btn" id="musicToggle" title="背景音樂">
     <i class="fa-solid fa-music"></i>
   </div>
-  <audio id="bgMusic" loop src="https://stream.zeno.fm/f3wvbbqmdg8vt"></audio>
+  <audio id="bgMusic" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939b4b017.mp3?filename=korean-acoustic-pop-123471.mp3"></audio>
 
   <!-- 固定毛玻璃導覽列 -->
   <nav class="navbar">
@@ -572,7 +572,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <!-- 藝術感倒數計時器 (倒數至 11:30 入席) -->
+    <!-- 藝術感倒數計時器 -->
     <div class="timer-section">
       <div class="timer-title">距離婚禮倒數 COUNTDOWN</div>
       <div class="timer-grid no-wrap">
@@ -749,7 +749,7 @@
   </div>
 
   <script>
-    // 倒數計時邏輯 (更新為 2027年3月6日 11:30 入席)
+    // 倒數計時邏輯 (2027年3月6日 11:30 入席)
     const weddingDate = new Date("March 6, 2027 11:30:00").getTime();
 
     function updateCountdown() {
@@ -777,21 +777,39 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // 音樂播放邏輯
+    // 改良版音樂播放邏輯（支援點擊頁面解鎖自動播放機制）
     const musicBtn = document.getElementById('musicToggle');
     const bgMusic = document.getElementById('bgMusic');
     let isPlaying = false;
 
-    musicBtn.addEventListener('click', () => {
+    function playAudio() {
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+      }).catch(err => {
+        console.log("自動播放限制已擋下，等待賓客點擊頁面...", err);
+      });
+    }
+
+    // 點擊右上角按鈕切換
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (isPlaying) {
         bgMusic.pause();
         musicBtn.classList.remove('playing');
+        isPlaying = false;
       } else {
-        bgMusic.play().catch(e => console.log('Autoplay constraint:', e));
-        musicBtn.classList.add('playing');
+        playAudio();
       }
-      isPlaying = !isPlaying;
     });
+
+    // 當賓客點擊網頁任何地方時自動播放音樂（解除智慧型手機 Autoplay 限制）
+    document.addEventListener('click', function initPlay() {
+      if (!isPlaying) {
+        playAudio();
+      }
+      document.removeEventListener('click', initPlay);
+    }, { once: true });
 
     // 表單動態連動邏輯
     const attendStatusSelect = document.getElementById('attendStatusSelect');
