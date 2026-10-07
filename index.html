@@ -1,280 +1,32 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>政儒 & 怡靜 婚禮邀請函 | WEDDING INVITATION</title>
-  
-  <!-- 字體引入 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome 圖示 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+function sendWeddingConfirmation(e) {
+  // 取得賓客填寫的欄位內容
+  var responses = e.values;
+  var timestamp = responses[0];
+  var name = responses[1]; // 依您表單的欄位順序調整索引
+  var email = responses[5]; // 請確認此索引對應電子郵件欄位
 
-  <style>
-    :root {
-      --primary-red: #8B1E2D;
-      --soft-red: #A8201A;
-      --bg-cream: #FAF7F5;
-      --card-white: #FFFFFF;
-      --text-dark: #2B2B2B;
-      --text-muted: #666666;
-      --border-color: #EADCD6;
-    }
+  if (email && email.indexOf('@') > -1) {
+    var subject = "【政儒 & 怡靜】婚禮出席回函確認信";
+    var htmlBody = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+        <h2 style="color: #8B1E2D;">親愛的 ${name} 您好：</h2>
+        <p>感謝您撥空填寫我們的婚禮出席回函！我們已經收到您的回應囉。</p>
+        <hr style="border: none; border-top: 1px solid #EADCD6; margin: 20px 0;">
+        <h3 style="color: #8B1E2D;">婚禮宴會資訊</h3>
+        <ul>
+          <li><strong>日期：</strong>2027年3月6日（星期六）</li>
+          <li><strong>時間：</strong>11:30 入席 | 12:00 開席</li>
+          <li><strong>地點：</strong>八德彭園婚宴會館（桃園市八德區介壽路一段728號3樓）</li>
+        </ul>
+        <p>期待在婚禮當天與您相見！</p>
+        <p style="margin-top: 30px; color: #888;">政儒 & 怡靜 敬上 🤍</p>
+      </div>
+    `;
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      font-family: 'Noto Serif TC', serif;
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
-      overflow-x: hidden;
-      line-height: 1.8;
-    }
-
-    .font-english {
-      font-family: 'Cormorant Garamond', serif;
-    }
-
-    .no-wrap {
-      white-space: nowrap;
-    }
-
-    /* 毛玻璃頂部導覽列 */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(234, 220, 214, 0.5);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-    }
-
-    .nav-logo {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--primary-red);
-      letter-spacing: 1px;
-    }
-
-    .nav-btn {
-      background-color: var(--primary-red);
-      color: #fff;
-      padding: 6px 16px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(139, 30, 45, 0.2);
-    }
-
-    .nav-btn:hover {
-      background-color: var(--soft-red);
-    }
-
-    /* 浮動音樂按鈕 */
-    .music-btn {
-      position: fixed;
-      top: 65px;
-      right: 18px;
-      z-index: 99;
-      width: 40px;
-      height: 40px;
-      background: var(--card-white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary-red);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      cursor: pointer;
-      border: 1px solid var(--border-color);
-      transition: transform 0.3s;
-    }
-
-    .music-btn.playing i {
-      animation: spin 4s linear infinite;
-    }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    /* 隱藏 YouTube Player 容器 */
-    #yt-player-container {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    /* 首頁全螢幕與跨平台相容封面 */
-    .hero-section {
-      position: relative;
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      background-color: var(--bg-cream);
-      overflow: hidden;
-      padding-top: 55px;
-    }
-
-    .hero-img-container {
-      width: 100%;
-      flex: 1;
-      min-height: 50vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .hero-bg-img {
-      width: 100%;
-      height: 100%;
-      max-height: 70vh;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-
-    /* 圓弧白色拱形卡片覆蓋 */
-    .hero-card {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      background: var(--card-white);
-      border-radius: 40px 40px 0 0;
-      padding: 30px 24px 40px;
-      text-align: center;
-      box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
-      margin-top: -30px;
-    }
-
-    /* 蝴蝶結裝飾 */
-    .bow-icon {
-      width: 45px;
-      height: 45px;
-      margin: -52px auto 10px;
-      background: var(--card-white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    .bow-icon svg {
-      width: 28px;
-      height: 28px;
-      fill: var(--primary-red);
-    }
-
-    .couple-names {
-      font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--text-dark);
-      margin-bottom: 8px;
-    }
-
-    .welcome-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-red);
-      letter-spacing: 4px;
-      line-height: 1;
-      margin: 10px 0 8px;
-    }
-
-    .welcome-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      letter-spacing: 3px;
-    }
-
-    /* 通用章節與卡片 */
-    .section-container {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 50px 20px;
-      text-align: center;
-    }
-
-    .section-sparkle-title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--primary-red);
-      letter-spacing: 4px;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .sparkle-dot {
-      font-size: 0.8rem;
-      color: #D88288;
-    }
-
-    .invitation-text {
-      font-size: 0.98rem;
-      color: #4A4A4A;
-      line-height: 2.1;
-      margin-bottom: 35px;
-      letter-spacing: 1px;
-    }
-
-    .photo-frame {
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-      margin-bottom: 35px;
-    }
-
-    .photo-frame img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* 分隔蝴蝶結點綴 */
-    .divider-bow {
-      margin: 30px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .divider-line {
-      height: 1px;
-      width: 60px;
-      background: var(--border-color);
-    }
-
-    /* 藝術感
+    MailApp.sendEmail({
+      to: email,
+      subject: subject,
+      htmlBody: htmlBody
+    });
+  }
+}
