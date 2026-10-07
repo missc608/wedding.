@@ -114,18 +114,7 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* 隱藏 YouTube Player 容器 */
-    #yt-player-container {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    /* 首頁全螢幕與跨平台相容封面 */
+    /* 首頁全螢幕封面 */
     .hero-section {
       position: relative;
       width: 100%;
@@ -529,15 +518,15 @@
 </head>
 <body>
 
-  <!-- 音樂播放器 (浮動) -->
+  <!-- 音樂播放按鈕 (右上方) -->
   <div class="music-btn" id="musicToggle" title="背景音樂">
     <i class="fa-solid fa-music"></i>
   </div>
 
-  <!-- 隱藏的 YouTube 音樂播放器元件 -->
-  <div id="yt-player-container">
-    <div id="yt-player"></div>
-  </div>
+  <!-- 原生 HTML5 音訊標籤 -->
+  <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- 固定毛玻璃導覽列 -->
   <nav class="navbar">
@@ -583,7 +572,7 @@
 
     <div class="divider-bow">
       <div class="divider-line"></div>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-red)"><path d="M12,11.5 C10.5,8.5 6,5 3.5,7.5 C1,10 5,14 12,13.5 C19,14 23,10 20.5,7.5 C18,5 13.5,8.5 12,11.5 Z M12,11 A1.5,1.5 0 1,0 12,11 Z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-red)"><path d="M12,11.5 C10.5,8.5 6,5 3.5,7.5 C1,10 5,14 12,13.5 C19,14 23,10 20.5,7.5 C18,5 13.5,8.5 12,11.5 Z M12,11 A1.5,1.5 0 1,0 12,14 A1.5,1.5 0 1,0 12,11 Z"/></svg>
       <div class="divider-line"></div>
     </div>
 
@@ -643,6 +632,7 @@
         RSVP <span>出席回函</span>
       </div>
 
+      <!-- 已更新至新的 Google Form action URL -->
       <form id="weddingForm" action="https://docs.google.com/forms/d/e/1FAIpQLScNtYfmOBcb8rM_W8GayVsepZQXkl-csftjMGl_Z58cEx-ofw/formResponse" method="POST" target="hidden_iframe">
         
         <!-- 1. 姓名 -->
@@ -654,10 +644,10 @@
         <!-- 2. 是否出席 -->
         <div class="form-group">
           <label class="form-label">是否出席 <span>ATTENDANCE</span></label>
-          <select id="attendStatusSelect" class="form-control" required>
+          <select id="attendStatusSelect" name="entry.1096411337" class="form-control" required>
             <option value="" disabled selected>請選擇出席狀態</option>
-            <option value="yes">會唷，準時參加</option>
-            <option value="no">不克參加，送上祝福</option>
+            <option value="會唷，準時參加">會唷，準時參加</option>
+            <option value="不克參加，送上祝福">不克參加，送上祝福</option>
           </select>
         </div>
 
@@ -674,10 +664,10 @@
             </select>
           </div>
 
-          <!-- 4. 喜帖需求 -->
+          <!-- 4. 喜帖需求 (使用新 Entry ID: entry.384949294) -->
           <div class="form-group">
             <label class="form-label">喜帖需求 <span>INVITATION NEED</span></label>
-            <select id="inviteNeedSelect" class="form-control">
+            <select id="inviteNeedSelect" name="entry.384949294" class="form-control">
               <option value="不用，已經清楚婚禮資訊" selected>不用，已經清楚婚禮資訊</option>
               <option value="要，請給我電子喜帖">要，請給我電子喜帖</option>
               <option value="要請給我紙本喜帖">要請給我紙本喜帖</option>
@@ -763,9 +753,6 @@
     </div>
   </div>
 
-  <!-- YouTube IFrame Player API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-
   <script>
     // 倒數計時邏輯 (2027年3月6日 11:30 入席)
     const weddingDate = new Date("March 6, 2027 11:30:00").getTime();
@@ -795,56 +782,41 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // YouTube 隱藏式播放器 (BOL4 - Galaxy 給你宇宙)
-    let player;
-    let isMusicPlaying = false;
+    // 音訊播放控制邏輯
     const musicBtn = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    let isPlaying = false;
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('yt-player', {
-        height: '1',
-        width: '1',
-        videoId: '9U8uA7029yE', // 臉紅的思春期 - 給你宇宙 (Galaxy)
-        playerVars: {
-          'autoplay': 0,
-          'controls': 0,
-          'loop': 1,
-          'playlist': '9U8uA7029yE',
-          'playsinline': 1
-        },
-        events: {
-          'onReady': onPlayerReady
-        }
+    function playAudio() {
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+      }).catch(err => {
+        console.log("等待互動發聲...", err);
       });
     }
 
-    function onPlayerReady(event) {
-      // 網頁準備完畢，註冊全域點擊觸發播放
-      document.addEventListener('click', function startPlayOnFirstTouch() {
-        if (!isMusicPlaying && player && player.playVideo) {
-          player.playVideo();
-          isMusicPlaying = true;
-          musicBtn.classList.add('playing');
-        }
-        document.removeEventListener('click', startPlayOnFirstTouch);
-      }, { once: true });
+    function pauseAudio() {
+      bgMusic.pause();
+      isPlaying = false;
+      musicBtn.classList.remove('playing');
     }
 
-    // 點擊右上角音樂按鈕控制
     musicBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (!player || !player.playVideo) return;
-
-      if (isMusicPlaying) {
-        player.pauseVideo();
-        musicBtn.classList.remove('playing');
-        isMusicPlaying = false;
+      if (isPlaying) {
+        pauseAudio();
       } else {
-        player.playVideo();
-        musicBtn.classList.add('playing');
-        isMusicPlaying = true;
+        playAudio();
       }
     });
+
+    document.addEventListener('click', function startAudioOnInteraction() {
+      if (!isPlaying) {
+        playAudio();
+      }
+      document.removeEventListener('click', startAudioOnInteraction);
+    }, { once: true });
 
     // 表單動態連動邏輯
     const attendStatusSelect = document.getElementById('attendStatusSelect');
@@ -858,7 +830,7 @@
 
     // 1. 是否出席狀態切換
     attendStatusSelect.addEventListener('change', function() {
-      if (this.value === 'yes') {
+      if (this.value === '會唷，準時參加') {
         attendingDetails.style.display = 'block';
         hiddenCountInput.disabled = true;
         guestCountSelect.disabled = false;
