@@ -518,11 +518,10 @@
 </head>
 <body>
 
-  <!-- 音樂播放器 (浮動) - 替換為輕快浪漫 K-Pop 婚禮音樂風格 -->
+  <!-- 音樂播放器 (浮動) -->
   <div class="music-btn" id="musicToggle" title="背景音樂">
     <i class="fa-solid fa-music"></i>
   </div>
-  <audio id="bgMusic" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939b4b017.mp3?filename=korean-acoustic-pop-123471.mp3"></audio>
 
   <!-- 固定毛玻璃導覽列 -->
   <nav class="navbar">
@@ -542,7 +541,7 @@
       </div>
       <div class="couple-names">政儒 & 怡靜</div>
       <div class="welcome-title font-english">WELCOME</div>
-      <div class="welcome-subtitle">我們的婚禮邀請</div>
+      <div class="welcome-subtitle">我們的婚率邀請</div>
     </div>
   </section>
 
@@ -777,38 +776,99 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // 改良版音樂播放邏輯（支援點擊頁面解鎖自動播放機制）
-    const musicBtn = document.getElementById('musicToggle');
-    const bgMusic = document.getElementById('bgMusic');
-    let isPlaying = false;
+    // 突破跨網域與跨裝置限制：使用 Web Audio API 生成浪漫水晶八音盒音樂旋律
+    class WeddingMusicPlayer {
+      constructor() {
+        this.ctx = null;
+        this.isPlaying = false;
+        this.timer = null;
+        this.step = 0;
+        // 浪漫婚禮卡農風格旋律音符頻率
+        this.melody = [
+          261.63, 329.63, 392.00, 523.25, 392.00, 329.63,
+          220.00, 261.63, 329.63, 440.00, 329.63, 261.63,
+          174.61, 220.00, 261.63, 349.23, 261.63, 220.00,
+          196.00, 246.94, 293.66, 392.00, 293.66, 246.94
+        ];
+      }
 
-    function playAudio() {
-      bgMusic.play().then(() => {
-        isPlaying = true;
-        musicBtn.classList.add('playing');
-      }).catch(err => {
-        console.log("自動播放限制已擋下，等待賓客點擊頁面...", err);
-      });
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+      }
+
+      playNote(freq) {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine'; // 柔和的水晶八音盒音色
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+        gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.2);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 1.2);
+      }
+
+      start() {
+        this.init();
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+        this.isPlaying = true;
+        this.step = 0;
+        this.timer = setInterval(() => {
+          this.playNote(this.melody[this.step]);
+          this.step = (this.step + 1) % this.melody.length;
+        }, 320);
+      }
+
+      stop() {
+        this.isPlaying = false;
+        if (this.timer) {
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+      }
+
+      toggle() {
+        if (this.isPlaying) {
+          this.stop();
+        } else {
+          this.start();
+        }
+        return this.isPlaying;
+      }
     }
 
-    // 點擊右上角按鈕切換
+    const musicPlayer = new WeddingMusicPlayer();
+    const musicBtn = document.getElementById('musicToggle');
+
+    // 點擊右上角按鈕觸發音樂
     musicBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (isPlaying) {
-        bgMusic.pause();
-        musicBtn.classList.remove('playing');
-        isPlaying = false;
+      const playing = musicPlayer.toggle();
+      if (playing) {
+        musicBtn.classList.add('playing');
       } else {
-        playAudio();
+        musicBtn.classList.remove('playing');
       }
     });
 
-    // 當賓客點擊網頁任何地方時自動播放音樂（解除智慧型手機 Autoplay 限制）
-    document.addEventListener('click', function initPlay() {
-      if (!isPlaying) {
-        playAudio();
+    // 點擊網頁任意處自動觸發播放 (解除 iOS / Android 阻擋)
+    document.addEventListener('click', function initMusicOnTouch() {
+      if (!musicPlayer.isPlaying) {
+        musicPlayer.start();
+        musicBtn.classList.add('playing');
       }
-      document.removeEventListener('click', initPlay);
+      document.removeEventListener('click', initMusicOnTouch);
     }, { once: true });
 
     // 表單動態連動邏輯
