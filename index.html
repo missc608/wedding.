@@ -114,27 +114,39 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* 首頁全螢幕封面 */
+    /* 首頁全螢幕與跨平台相容封面 */
     .hero-section {
       position: relative;
       width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: flex-end;
       background-color: var(--bg-cream);
+      overflow: hidden;
+      padding-top: 55px;
+    }
+
+    .hero-img-container {
+      width: 100%;
+      flex: 1;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
     }
 
     .hero-bg-img {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
-      height: 75vh;
+      height: 100%;
+      max-height: 70vh;
       object-fit: cover;
-      object-position: center 20%;
+      object-position: center top;
+      display: block;
     }
 
     /* 圓弧白色拱形卡片覆蓋 */
@@ -142,20 +154,19 @@
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 520px;
       background: var(--card-white);
-      border-radius: 45px 45px 0 0;
-      padding: 35px 24px 45px;
+      border-radius: 40px 40px 0 0;
+      padding: 30px 24px 40px;
       text-align: center;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-      margin-top: 60vh;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
+      margin-top: -30px;
     }
 
     /* 蝴蝶結裝飾 */
     .bow-icon {
       width: 45px;
       height: 45px;
-      margin: -55px auto 10px;
+      margin: -52px auto 10px;
       background: var(--card-white);
       border-radius: 50%;
       display: flex;
@@ -507,11 +518,11 @@
 </head>
 <body>
 
-  <!-- 音樂播放器 (浮動) -->
+  <!-- 音樂播放器 (浮動) - BOL4 給你宇宙 (Galaxy) -->
   <div class="music-btn" id="musicToggle" title="背景音樂">
     <i class="fa-solid fa-music"></i>
   </div>
-  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=wedding-112702.mp3"></audio>
+  <audio id="bgMusic" loop src="https://stream.zeno.fm/f3wvbbqmdg8vt"></audio>
 
   <!-- 固定毛玻璃導覽列 -->
   <nav class="navbar">
@@ -519,9 +530,11 @@
     <a href="#rsvp" class="nav-btn">出席回函</a>
   </nav>
 
-  <!-- 首頁全螢幕封面 -->
+  <!-- 首頁封面 -->
   <section class="hero-section">
-    <img src="https://i.postimg.cc/J7QnMFTJ/0J7A8205.jpg" alt="政儒與怡靜 婚紗照" class="hero-bg-img">
+    <div class="hero-img-container">
+      <img src="https://i.postimg.cc/J7QnMFTJ/0J7A8205.jpg" alt="政儒與怡靜 婚紗照" class="hero-bg-img">
+    </div>
     
     <div class="hero-card">
       <div class="bow-icon">
@@ -559,7 +572,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <!-- 藝術感倒數計時器 -->
+    <!-- 藝術感倒數計時器 (倒數至 11:30 入席) -->
     <div class="timer-section">
       <div class="timer-title">距離婚禮倒數 COUNTDOWN</div>
       <div class="timer-grid no-wrap">
@@ -596,14 +609,14 @@
         </div>
         <div class="info-row">
           <i class="fa-regular fa-clock"></i>
-          <div><strong>時間：</strong>12:00 午宴入席</div>
+          <div><strong>時間：</strong>11:30 入席 | 12:00 開席</div>
         </div>
         <div class="info-row">
           <i class="fa-solid fa-location-dot"></i>
           <div><strong>地址：</strong>桃園市八德區介壽路一段728號3樓</div>
         </div>
 
-        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E6%94%BF%E5%84%92%26%E6%80%A1%E9%9D%99+%E5%A9%9A%E7%A6%AE%E5%AF%B5%E5%AE%B4&dates=20270306T040000Z/20270306T070000Z&details=%E8%AA%A0%E2%9D%A4%E8%AB%8B%E5%8F%83%E5%8A%A0%E6%88%91%E5%80%91%E7%9A%84%E5%A9%9A%E7%A6%AE%EF%BC%81&location=%E5%85%AB%E5%BE%B7%E5%BD%AD%E5%9C%92%E5%A9%9A%E5%AE%B4%E6%9C%83%E9%A4%A8" target="_blank" class="calendar-btn">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E6%94%BF%E5%84%92%26%E6%80%A1%E9%9D%99+%E5%A9%9A%E7%A6%AE%E5%AF%B5%E5%AE%B4&dates=20270306T033000Z/20270306T070000Z&details=%E8%AA%A0%E2%9D%A4%E8%AB%8B%E5%8F%83%E5%8A%A0%E6%88%91%E5%80%91%E7%9A%84%E5%A9%9A%E7%A6%AE%EF%BC%8111%3A30%E5%85%A5%E5%B8%AD%EF%BC%8C12%3A00%E9%96%8B%E5%B8%AD%E3%80%82&location=%E5%85%AB%E5%BE%B7%E5%BD%AD%E5%9C%92%E5%A9%9A%E5%AE%B4%E6%9C%83%E9%A4%A8" target="_blank" class="calendar-btn">
           <i class="fa-regular fa-calendar-plus"></i> 加入 Google 日曆提醒
         </a>
       </div>
@@ -736,8 +749,8 @@
   </div>
 
   <script>
-    // 倒數計時邏輯 (2027年3月6日 12:00)
-    const weddingDate = new Date("March 6, 2027 12:00:00").getTime();
+    // 倒數計時邏輯 (更新為 2027年3月6日 11:30 入席)
+    const weddingDate = new Date("March 6, 2027 11:30:00").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -774,7 +787,7 @@
         bgMusic.pause();
         musicBtn.classList.remove('playing');
       } else {
-        bgMusic.play();
+        bgMusic.play().catch(e => console.log('Autoplay constraint:', e));
         musicBtn.classList.add('playing');
       }
       isPlaying = !isPlaying;
@@ -794,11 +807,11 @@
     attendStatusSelect.addEventListener('change', function() {
       if (this.value === 'yes') {
         attendingDetails.style.display = 'block';
-        hiddenCountInput.disabled = true; // 啟用下拉選單的人數
+        hiddenCountInput.disabled = true;
         guestCountSelect.disabled = false;
       } else {
         attendingDetails.style.display = 'none';
-        hiddenCountInput.disabled = false; // 停用選單，自動送出 0 人
+        hiddenCountInput.disabled = false;
         guestCountSelect.disabled = true;
       }
     });
