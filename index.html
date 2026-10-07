@@ -1,177 +1,848 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="scroll-smooth">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>政儒 & 怡靜 婚禮邀請函</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Cormorant Garamond & Noto Serif TC -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        morandi: {
-                            sand: '#d4a373',
-                            sage: '#8da399',
-                            cream: '#fefae0',
-                            dark: '#3a3a3a',
-                            lightbg: '#f9f8f6',
-                            cardbg: '#ffffff',
-                            muted: '#a3b18b'
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Noto Serif TC"', '"Cormorant Garamond"', 'serif'],
-                        en: ['"Cormorant Garamond"', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Noto Serif TC', serif;
-            background-color: #f9f8f6;
-            color: #3a3a3a;
-            overflow-x: hidden;
-        }
-        .en-font {
-            font-family: 'Cormorant Garamond', serif;
-        }
-        .glass-nav {
-            background: rgba(254, 250, 224, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .nowrap-text {
-            white-space: nowrap;
-        }
-        /* 隱藏捲軸但保持滾動功能 */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>政儒 & 怡靜 婚禮邀請函 | WEDDING INVITATION</title>
+  
+  <!-- 字體引入 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 圖示 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-red: #8B1E2D;
+      --soft-red: #A8201A;
+      --bg-cream: #FAF7F5;
+      --card-white: #FFFFFF;
+      --text-dark: #2B2B2B;
+      --text-muted: #666666;
+      --border-color: #EADCD6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.8;
+    }
+
+    .font-english {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .no-wrap {
+      white-space: nowrap;
+    }
+
+    /* 毛玻璃頂部導覽列 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(234, 220, 214, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-red);
+      letter-spacing: 1px;
+    }
+
+    .nav-btn {
+      background-color: var(--primary-red);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(139, 30, 45, 0.2);
+    }
+
+    .nav-btn:hover {
+      background-color: var(--soft-red);
+    }
+
+    /* 浮動音樂按鈕 */
+    .music-btn {
+      position: fixed;
+      top: 65px;
+      right: 18px;
+      z-index: 99;
+      width: 40px;
+      height: 40px;
+      background: var(--card-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-red);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s;
+    }
+
+    .music-btn.playing i {
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* 首頁全螢幕封面 */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      background-color: var(--bg-cream);
+      overflow: hidden;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 75vh;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    /* 圓弧白色拱形卡片覆蓋 */
+    .hero-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 520px;
+      background: var(--card-white);
+      border-radius: 45px 45px 0 0;
+      padding: 35px 24px 45px;
+      text-align: center;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+      margin-top: 60vh;
+    }
+
+    /* 蝴蝶結裝飾 */
+    .bow-icon {
+      width: 45px;
+      height: 45px;
+      margin: -55px auto 10px;
+      background: var(--card-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .bow-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--primary-red);
+    }
+
+    .couple-names {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .welcome-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-red);
+      letter-spacing: 4px;
+      line-height: 1;
+      margin: 10px 0 8px;
+    }
+
+    .welcome-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      letter-spacing: 3px;
+    }
+
+    /* 通用章節與卡片 */
+    .section-container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .section-sparkle-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-red);
+      letter-spacing: 4px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .sparkle-dot {
+      font-size: 0.8rem;
+      color: #D88288;
+    }
+
+    .invitation-text {
+      font-size: 0.98rem;
+      color: #4A4A4A;
+      line-height: 2.1;
+      margin-bottom: 35px;
+      letter-spacing: 1px;
+    }
+
+    .photo-frame {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+      margin-bottom: 35px;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 分隔蝴蝶結點綴 */
+    .divider-bow {
+      margin: 30px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .divider-line {
+      height: 1px;
+      width: 60px;
+      background: var(--border-color);
+    }
+
+    /* 藝術感倒數計時器 */
+    .timer-section {
+      background: #FFF;
+      border-radius: 24px;
+      padding: 35px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      border: 1px solid rgba(234, 220, 214, 0.6);
+      margin-bottom: 40px;
+    }
+
+    .timer-title {
+      font-size: 1.1rem;
+      color: var(--primary-red);
+      letter-spacing: 2px;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .timer-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .timer-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 12px 8px;
+      min-width: 68px;
+      box-shadow: 0 6px 18px rgba(139, 30, 45, 0.08);
+      border: 1px solid #F5EBE6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timer-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-red);
+      line-height: 1.1;
+    }
+
+    .timer-unit {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    .timer-divider {
+      width: 1px;
+      height: 35px;
+      background-color: var(--border-color);
+      margin: 0 2px;
+    }
+
+    /* 宴會 V-Card 設計 */
+    .v-card {
+      background: var(--card-white);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .v-card-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .v-card-body {
+      padding: 30px 25px;
+    }
+
+    .v-card-title {
+      font-size: 1.4rem;
+      color: var(--primary-red);
+      font-weight: 700;
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--bg-cream);
+      padding-bottom: 10px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .info-row i {
+      color: var(--primary-red);
+      margin-top: 4px;
+      width: 16px;
+    }
+
+    .calendar-btn {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      background: var(--bg-cream);
+      color: var(--primary-red);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: 15px;
+      transition: all 0.3s;
+    }
+
+    .calendar-btn:hover {
+      background: var(--primary-red);
+      color: #FFF;
+    }
+
+    /* 出席回函表單區塊 */
+    .rsvp-section {
+      background: var(--card-white);
+      border-radius: 24px;
+      padding: 35px 25px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .form-label span {
+      font-size: 0.75rem;
+      color: var(--primary-red);
+      margin-left: 4px;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 1px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-red);
+      background-color: #FFF;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--primary-red);
+      color: #FFF;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(139, 30, 45, 0.25);
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background: var(--soft-red);
+    }
+
+    .conditional-fields {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Modal 提示框 */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #FFF;
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .modal-icon {
+      font-size: 2.5rem;
+      color: var(--primary-red);
+      margin-bottom: 12px;
+    }
+
+    .modal-btn {
+      margin-top: 20px;
+      background: var(--primary-red);
+      color: #FFF;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    /* 頁尾 */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
-<body class="bg-morandi-lightbg text-morandi-dark antialiased">
+<body>
 
-    <!-- 1. 固定的毛玻璃質感導航列 -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-morandi-sand/20 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#hero" class="en-font text-2xl md:text-3xl tracking-wider font-semibold text-morandi-dark hover:opacity-80 transition">
-                Zheng-Ru & Yi-Jing
-            </a>
-            <nav class="hidden md:flex items-center space-x-10 text-sm tracking-widest font-medium">
-                <a href="#about" class="hover:text-morandi-sand transition">關於我們 / ABOUT</a>
-                <a href="#details" class="hover:text-morandi-sand transition">婚禮詳情 / DETAILS</a>
-                <a href="#rsvp" class="hover:text-morandi-sand transition">出席回函 / RSVP</a>
-            </nav>
-            <!-- 手機版漢堡選單按鈕 -->
-            <button id="menu-btn" class="md:hidden text-morandi-dark focus:outline-none p-2" aria-label="選單">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-        </div>
-        <!-- 手機版下拉選單 -->
-        <div id="mobile-menu" class="hidden md:hidden glass-nav border-b border-morandi-sand/20 px-6 py-4 flex flex-col space-y-3 text-sm tracking-wider">
-            <a href="#about" class="mobile-link py-2 hover:text-morandi-sand transition">關於我們 / ABOUT</a>
-            <a href="#details" class="mobile-link py-2 hover:text-morandi-sand transition">婚禮詳情 / DETAILS</a>
-            <a href="#rsvp" class="mobile-link py-2 hover:text-morandi-sand transition">出席回函 / RSVP</a>
-        </div>
-    </header>
+  <!-- 音樂播放器 (浮動) -->
+  <div class="music-btn" id="musicToggle" title="背景音樂">
+    <i class="fa-solid fa-music"></i>
+  </div>
+  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=wedding-112702.mp3"></audio>
 
-    <!-- 3. 首頁全螢幕封面背景 -->
-    <section id="hero" class="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        <!-- 背景圖片與柔和遮罩 -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://i.postimg.cc/tgMnz6H1/0J7A8207.jpg" alt="政儒與怡靜婚紗照" class="w-full h-full object-cover object-center scale-105 animate-pulse duration-1000" style="animation-duration: 8s;" onerror="this.src='https://placehold.co/1920x1080/d4a373/ffffff?text=Wedding'">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
+  <!-- 固定毛玻璃導覽列 -->
+  <nav class="navbar">
+    <div class="nav-logo font-english">J & C WEDDING</div>
+    <a href="#rsvp" class="nav-btn">出席回函</a>
+  </nav>
+
+  <!-- 首頁全螢幕封面 -->
+  <section class="hero-section">
+    <img src="https://i.postimg.cc/J7QnMFTJ/0J7A8205.jpg" alt="政儒與怡靜 婚紗照" class="hero-bg-img">
+    
+    <div class="hero-card">
+      <div class="bow-icon">
+        <svg viewBox="0 0 24 24"><path d="M12,11.5 C10.5,8.5 6,5 3.5,7.5 C1,10 5,14 12,13.5 C19,14 23,10 20.5,7.5 C18,5 13.5,8.5 12,11.5 Z M8.5,14 C6.5,17 4,21 3,20 C2,19 5.5,15.5 8,13.5 Z M15.5,14 C17.5,17 20,21 21,20 C22,19 18.5,15.5 16,13.5 Z M12,11 A1.5,1.5 0 1,0 12,14 A1.5,1.5 0 1,0 12,11 Z"/></svg>
+      </div>
+      <div class="couple-names">政儒 & 怡靜</div>
+      <div class="welcome-title font-english">WELCOME</div>
+      <div class="welcome-subtitle">我們的婚禮邀請</div>
+    </div>
+  </section>
+
+  <!-- 溫馨詩歌 / 邀請文案區塊 -->
+  <section class="section-container">
+    <div class="section-sparkle-title font-english">
+      <span class="sparkle-dot">✨</span> WEDDING <span class="sparkle-dot">✨</span>
+    </div>
+    
+    <div class="invitation-text">
+      這是一封心意滿滿的婚禮邀請函<br>
+      收到這封邀請函的你們<br>
+      都是我們人生中最重要的部分<br>
+      誠摯邀請您攜家人參加我們的婚禮<br>
+      見證我們的愛情<br>
+      感謝您一直以來的支持與關愛<br>
+      我們攜手期待著您的到來
+    </div>
+
+    <div class="photo-frame">
+      <img src="https://i.postimg.cc/9FY4nKhq/0J7A8218.jpg" alt="婚禮照片">
+    </div>
+
+    <div class="divider-bow">
+      <div class="divider-line"></div>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-red)"><path d="M12,11.5 C10.5,8.5 6,5 3.5,7.5 C1,10 5,14 12,13.5 C19,14 23,10 20.5,7.5 C18,5 13.5,8.5 12,11.5 Z M12,11 A1.5,1.5 0 1,0 12,14 A1.5,1.5 0 1,0 12,11 Z"/></svg>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- 藝術感倒數計時器 -->
+    <div class="timer-section">
+      <div class="timer-title">距離婚禮倒數 COUNTDOWN</div>
+      <div class="timer-grid no-wrap">
+        <div class="timer-card">
+          <span class="timer-num font-english" id="days">00</span>
+          <span class="timer-unit">DAYS 天</span>
         </div>
-        
-        <!-- 首頁文案內容 -->
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-12 text-white">
-            <p class="en-font text-xl md:text-2xl tracking-[0.3em] mb-4 text-morandi-cream font-light uppercase">The Wedding Invitation</p>
-            <h1 class="text-4xl md:text-7xl font-serif tracking-widest mb-6 font-normal drop-shadow-md">
-                政儒 <span class="en-font text-3xl md:text-5xl text-morandi-sand font-light">&amp;</span> 怡靜
-            </h1>
-            <p class="text-lg md:text-xl font-light tracking-[0.2em] mb-8 text-morandi-cream/90">
-                我們的婚禮邀請
-            </p>
-            <div class="w-16 h-[1px] bg-morandi-sand mx-auto mb-8"></div>
-            <p class="en-font text-lg md:text-2xl tracking-widest text-morandi-cream">
-                2027.03.06 <span class="text-morandi-sand mx-2">|</span> Wedding Day
-            </p>
+        <div class="timer-divider"></div>
+        <div class="timer-card">
+          <span class="timer-num font-english" id="hours">00</span>
+          <span class="timer-unit">HOURS 時</span>
+        </div>
+        <div class="timer-divider"></div>
+        <div class="timer-card">
+          <span class="timer-num font-english" id="minutes">00</span>
+          <span class="timer-unit">MINS 分</span>
+        </div>
+        <div class="timer-divider"></div>
+        <div class="timer-card">
+          <span class="timer-num font-english" id="seconds">00</span>
+          <span class="timer-unit">SECS 秒</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 宴會 V-Card 資訊 -->
+    <div class="v-card">
+      <img src="https://i.postimg.cc/2SjqRGkn/0J7A8225.jpg" alt="宴會場地" class="v-card-img">
+      <div class="v-card-body">
+        <div class="v-card-title">八德彭園婚宴會館</div>
+        <div class="info-row">
+          <i class="fa-regular fa-calendar-check"></i>
+          <div><strong>日期：</strong>2027年3月6日（星期六）</div>
+        </div>
+        <div class="info-row">
+          <i class="fa-regular fa-clock"></i>
+          <div><strong>時間：</strong>12:00 午宴入席</div>
+        </div>
+        <div class="info-row">
+          <i class="fa-solid fa-location-dot"></i>
+          <div><strong>地址：</strong>桃園市八德區介壽路一段728號3樓</div>
         </div>
 
-        <!-- 向下滾動提示 -->
-        <a href="#about" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white/80 hover:text-white transition animate-bounce">
-            <i class="fa-solid fa-chevron-down text-xl"></i>
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E6%94%BF%E5%84%92%26%E6%80%A1%E9%9D%99+%E5%A9%9A%E7%A6%AE%E5%AF%B5%E5%AE%B4&dates=20270306T040000Z/20270306T070000Z&details=%E8%AA%A0%E2%9D%A4%E8%AB%8B%E5%8F%83%E5%8A%A0%E6%88%91%E5%80%91%E7%9A%84%E5%A9%9A%E7%A6%AE%EF%BC%81&location=%E5%85%AB%E5%BE%B7%E5%BD%AD%E5%9C%92%E5%A9%9A%E5%AE%B4%E6%9C%83%E9%A4%A8" target="_blank" class="calendar-btn">
+          <i class="fa-regular fa-calendar-plus"></i> 加入 Google 日曆提醒
         </a>
-    </section>
+      </div>
+    </div>
 
-    <!-- 2. 藝術感倒數計時器視覺 (極重要) -->
-    <section class="py-20 bg-morandi-cream/60 border-b border-morandi-sand/10">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-2xl md:text-3xl font-serif tracking-widest mb-2 text-morandi-dark">距離幸福時刻</h2>
-            <p class="en-font text-sm text-morandi-sand uppercase tracking-[0.2em] mb-10">Countdown to Our Special Day</p>
-            
-            <div id="countdown-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 justify-center items-center max-w-3xl mx-auto">
-                <!-- 天數 -->
-                <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(212,163,115,0.12)] border border-morandi-sand/20 flex flex-col items-center relative">
-                    <span id="days" class="en-font text-4xl md:text-6xl font-semibold text-morandi-dark mb-1">--</span>
-                    <span class="text-xs md:text-sm tracking-widest text-morandi-dark/60 uppercase">Days / 天</span>
-                </div>
-                <!-- 時數 -->
-                <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(212,163,115,0.12)] border border-morandi-sand/20 flex flex-col items-center relative">
-                    <span id="hours" class="en-font text-4xl md:text-6xl font-semibold text-morandi-dark mb-1">--</span>
-                    <span class="text-xs md:text-sm tracking-widest text-morandi-dark/60 uppercase">Hours / 時</span>
-                </div>
-                <!-- 分鐘 -->
-                <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(212,163,115,0.12)] border border-morandi-sand/20 flex flex-col items-center relative">
-                    <span id="minutes" class="en-font text-4xl md:text-6xl font-semibold text-morandi-dark mb-1">--</span>
-                    <span class="text-xs md:text-sm tracking-widest text-morandi-dark/60 uppercase">Minutes / 分</span>
-                </div>
-                <!-- 秒數 -->
-                <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(212,163,115,0.12)] border border-morandi-sand/20 flex flex-col items-center relative">
-                    <span id="seconds" class="en-font text-4xl md:text-6xl font-semibold text-morandi-dark mb-1">--</span>
-                    <span class="text-xs md:text-sm tracking-widest text-morandi-dark/60 uppercase">Seconds / 秒</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 出席回函區塊 -->
+    <div class="rsvp-section" id="rsvp">
+      <div class="section-sparkle-title font-english" style="font-size: 1.6rem; margin-bottom: 20px;">
+        RSVP <span>出席回函</span>
+      </div>
 
-    <!-- 關於我們與相片藝廊 -->
-    <section id="about" class="py-24 px-6 max-w-5xl mx-auto">
-        <div class="text-center mb-16">
-            <span class="en-font text-morandi-sand uppercase tracking-[0.3em] text-sm block mb-2">Our Story</span>
-            <h2 class="text-3xl md:text-4xl font-serif tracking-widest text-morandi-dark">關於我們</h2>
-            <div class="w-12 h-[1px] bg-morandi-sand mx-auto mt-4"></div>
+      <form id="weddingForm" action="https://docs.google.com/forms/d/e/1FAIpQLScNtYfmOBcb8rM_W8GayVsepZQXkl-csftjMGl_Z58cEx-ofw/formResponse" method="POST" target="hidden_iframe">
+        
+        <!-- 1. 姓名 -->
+        <div class="form-group">
+          <label class="form-label">姓名 <span>NAME</span></label>
+          <input type="text" name="entry.238723909" class="form-control" placeholder="請輸入您的姓名" required>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
-            <div class="space-y-6 text-morandi-dark/80 leading-relaxed font-light text-justify md:text-left">
-                <p class="text-lg font-serif text-morandi-dark italic">「在對的時間遇見對的人，是一生最美的幸運。」</p>
-                <p>我們相知相惜走過了許多美好的歲月，在彼此的陪伴中看見了未來的模樣。懷著感恩與喜悅的心情，我們決定攜手邁向人生的下一個階段。</p>
-                <p>誠摯地邀請您一同來見證我們的幸福時刻，分享我們的喜悅，您的祝福將為我們的婚禮增添最美的光彩。</p>
-                <div class="pt-4">
-                    <span class="en-font text-2xl text-morandi-sand block">Zheng-Ru &amp; Yi-Jing</span>
-                </div>
+        <!-- 2. 是否出席 -->
+        <div class="form-group">
+          <label class="form-label">是否出席 <span>ATTENDANCE</span></label>
+          <select id="attendStatusSelect" class="form-control" required>
+            <option value="" disabled selected>請選擇出席狀態</option>
+            <option value="yes">會唷，準時參加</option>
+            <option value="no">不克參加，送上祝福</option>
+          </select>
+        </div>
+
+        <!-- 選擇「會唷，準時參加」後展開的細節欄位 -->
+        <div id="attendingDetails" class="conditional-fields">
+          
+          <!-- 3. 賓客身分 -->
+          <div class="form-group">
+            <label class="form-label">賓客身分 <span>IDENTITY</span></label>
+            <select name="entry.756719319" class="form-control">
+              <option value="男方親友">男方親友</option>
+              <option value="女方親友">女方親友</option>
+              <option value="共同好友">共同好友</option>
+            </select>
+          </div>
+
+          <!-- 4. 喜帖需求 -->
+          <div class="form-group">
+            <label class="form-label">喜帖需求 <span>INVITATION NEED</span></label>
+            <select id="inviteNeedSelect" class="form-control">
+              <option value="不用，已經清楚婚禮資訊" selected>不用，已經清楚婚禮資訊</option>
+              <option value="要，請給我電子喜帖">要，請給我電子喜帖</option>
+              <option value="要請給我紙本喜帖">要請給我紙本喜帖</option>
+            </select>
+          </div>
+
+          <!-- 5. 寄送地址 (僅在選擇紙本喜帖時出現) -->
+          <div id="addressGroup" class="form-group conditional-fields">
+            <label class="form-label">寄送地址（含郵遞區號） <span>ADDRESS</span></label>
+            <input type="text" id="addressInput" name="entry.372078878" class="form-control" placeholder="請輸入完整郵寄地址">
+          </div>
+
+          <!-- 6. 電子郵件 -->
+          <div class="form-group">
+            <label class="form-label">電子郵件 <span>EMAIL</span></label>
+            <input type="email" name="entry.1508122991" class="form-control" placeholder="example@email.com">
+          </div>
+
+          <!-- 7. 參加午宴人數 -->
+          <div class="form-group">
+            <label class="form-label">參加午宴人數 <span>ATTENDING COUNT</span></label>
+            <select name="entry.2064784402" id="guestCountSelect" class="form-control">
+              <option value="1">1 位</option>
+              <option value="2">2 位</option>
+              <option value="3">3 位</option>
+              <option value="4">4 位</option>
+              <option value="5">5 位以上</option>
+            </select>
+          </div>
+
+          <!-- 8. 素食人數 & 兒童椅 (人數 > 0 智慧顯示) -->
+          <div id="dietaryGroup" class="conditional-fields" style="display: block;">
+            <div class="form-group">
+              <label class="form-label">素食人數 <span>VEGETARIAN</span></label>
+              <select name="entry.1723381945" class="form-control">
+                <option value="0">0 位</option>
+                <option value="1">1 位</option>
+                <option value="2">2 位</option>
+                <option value="3">3 位</option>
+              </select>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="space-y-4">
-                    <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4]">
-                        <img src="https://i.postimg.cc/9FY4nKhq/0J7A8218.jpg" alt="婚紗照 1" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x800/d4a373/ffffff?text=Photo+1'">
-                    </div>
-                </div>
-                <div class="space-y-4 pt-8">
-                    <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4]">
-                        <img src="https://i.postimg.cc/2SjqRGkn/0J7A8225.jpg" alt="婚紗照 2" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror
+
+            <div class="form-group">
+              <label class="form-label">兒童椅需求 <span>BABY SEATS</span></label>
+              <select name="entry.1578009372" class="form-control">
+                <option value="0">0 張</option>
+                <option value="1">1 張</option>
+                <option value="2">2 張</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 隱藏的出席人數 (不克參加時自動設為 0 送出) -->
+        <input type="hidden" id="hiddenCountInput" disabled name="entry.2064784402" value="0">
+
+        <!-- 9. 祝福的話 -->
+        <div class="form-group">
+          <label class="form-label">祝福的話 <span>BLESSINGS</span></label>
+          <textarea name="entry.372078878" id="mainBlessingInput" class="form-control" rows="3" placeholder="留下給新人的祝福吧..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">確認送出出席回函</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>政儒 & 怡靜 誠摯邀請 🤍 2027.03.06</p>
+  </footer>
+
+  <!-- 隱藏式 Iframe 提交技術 -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <!-- 提示 Modal -->
+  <div class="modal-overlay" id="thankModal">
+    <div class="modal-box">
+      <div class="modal-icon"><i class="fa-regular fa-circle-check"></i></div>
+      <h3 style="color: var(--primary-red); margin-bottom: 10px;">回函已成功送出！</h3>
+      <p style="color: #666; font-size: 0.9rem;">感謝您的回應，我們期待在婚禮當天與您相見！</p>
+      <button class="modal-btn" onclick="closeModal()">關閉視窗</button>
+    </div>
+  </div>
+
+  <script>
+    // 倒數計時邏輯 (2027年3月6日 12:00)
+    const weddingDate = new Date("March 6, 2027 12:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance < 0) {
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 音樂播放邏輯
+    const musicBtn = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.classList.remove('playing');
+      } else {
+        bgMusic.play();
+        musicBtn.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // 表單動態連動邏輯
+    const attendStatusSelect = document.getElementById('attendStatusSelect');
+    const attendingDetails = document.getElementById('attendingDetails');
+    const hiddenCountInput = document.getElementById('hiddenCountInput');
+    const guestCountSelect = document.getElementById('guestCountSelect');
+    const dietaryGroup = document.getElementById('dietaryGroup');
+    const inviteNeedSelect = document.getElementById('inviteNeedSelect');
+    const addressGroup = document.getElementById('addressGroup');
+    const addressInput = document.getElementById('addressInput');
+
+    // 1. 是否出席狀態切換
+    attendStatusSelect.addEventListener('change', function() {
+      if (this.value === 'yes') {
+        attendingDetails.style.display = 'block';
+        hiddenCountInput.disabled = true; // 啟用下拉選單的人數
+        guestCountSelect.disabled = false;
+      } else {
+        attendingDetails.style.display = 'none';
+        hiddenCountInput.disabled = false; // 停用選單，自動送出 0 人
+        guestCountSelect.disabled = true;
+      }
+    });
+
+    // 2. 人數 > 0 才顯示飲食/需求
+    guestCountSelect.addEventListener('change', function() {
+      if (parseInt(this.value) > 0) {
+        dietaryGroup.style.display = 'block';
+      } else {
+        dietaryGroup.style.display = 'none';
+      }
+    });
+
+    // 3. 喜帖需求切換
+    inviteNeedSelect.addEventListener('change', function() {
+      if (this.value === '要請給我紙本喜帖') {
+        addressGroup.style.display = 'block';
+        addressInput.required = true;
+      } else {
+        addressGroup.style.display = 'none';
+        addressInput.required = false;
+        addressInput.value = '';
+      }
+    });
+
+    // 隱藏 Iframe 提交後處理
+    let isSubmitting = false;
+    document.getElementById('weddingForm').addEventListener('submit', function() {
+      isSubmitting = true;
+    });
+
+    document.getElementById('hidden_iframe').addEventListener('load', function() {
+      if (isSubmitting) {
+        document.getElementById('thankModal').style.display = 'flex';
+        document.getElementById('weddingForm').reset();
+        attendingDetails.style.display = 'none';
+        addressGroup.style.display = 'none';
+        isSubmitting = false;
+      }
+    });
+
+    function closeModal() {
+      document.getElementById('thankModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
